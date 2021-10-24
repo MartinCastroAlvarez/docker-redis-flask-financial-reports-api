@@ -42,7 +42,7 @@ def all_reports() -> dict:
     except Exception as error:  # noqa
         logger.exception("Error: '%s/'", blue)
         return {
-            "error": type(error),
+            "error": str(type(error)),
             "code": getattr(error, "CODE", "unknown"),
             "message": str(error).split("\n"),
         }
@@ -54,12 +54,11 @@ def report_by_id(report_id: str) -> dict:
     Returns a previously generated report.
     """
     try:
-        payload: dict = json.loads(request.data.decode("utf-8"))
         logger.error(
             "Report By ID: %s %s %s",
             request.method,
             report_id,
-            payload,
+            request.data,
         )
         reports: typing.Generator[Report, None, None]
         if request.method == "DELETE":
@@ -67,6 +66,7 @@ def report_by_id(report_id: str) -> dict:
                 report_id=report_id
             )
         elif request.method == "PUT":
+            payload: dict = json.loads(request.data.decode("utf-8"))
             reports = reports_controllers.create_reports_by_report_id(
                 report_id=report_id, financials=payload["financials"]
             )
@@ -81,7 +81,7 @@ def report_by_id(report_id: str) -> dict:
     except Exception as error:  # noqa
         logger.exception("Error: '%s/<report_id>'", blue)
         return {
-            "error": type(error),
+            "error": str(type(error)),
             "code": getattr(error, "CODE", "unknown"),
             "message": str(error).split("\n"),
         }

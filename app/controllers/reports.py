@@ -18,11 +18,13 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 class ReportIdException(AltmanException):
     """Raised when the report ID is invalid."""
+
     CODE: int = 2000
 
 
 class DuplicateException(AltmanException):
     """Raised when the report already exists."""
+
     CODE: int = 2001
 
 
@@ -50,8 +52,8 @@ def create_reports_by_report_id(
         yield report
     try:
         db.session.commit()
-    except exc.IntegrityError as error:
-        raise DuplicateException('The Report already exists!') from error
+    except exc.IntegrityError:
+        raise DuplicateException("The Report already exists!")
     except exc.SQLAlchemyError:
         db.session.rollback()
         raise
@@ -86,10 +88,11 @@ def delete_reports_by_report_id(
     logger.debug("Delete Reports: %s", report_id)
     if not report_id or not isinstance(report_id, str):
         raise ReportIdException("Invalid Report ID")
+    for report in get_reports_by_report_id(report_id):
+        db.session.delete(report)
+        yield report
     try:
-        for report in get_reports_by_report_id(report_id):
-            report.delete()
-            yield report
+        db.session.commit()
     except exc.SQLAlchemyError:
         db.session.rollback()
         raise

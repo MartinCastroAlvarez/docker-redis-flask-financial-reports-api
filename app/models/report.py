@@ -69,9 +69,9 @@ class Report(db.Model):
         Calculates the X1 ratio of the Altman Z-score.
         """
         try:
-            return self.working_capital / self.total_assets
+            return float(self.working_capital / self.total_assets)
         except ZeroDivisionError:
-            return 0
+            return 0.0
 
     @property
     def profitability(self) -> float:
@@ -79,9 +79,9 @@ class Report(db.Model):
         Calculates the X2 ratio of the Altman Z-score.
         """
         try:
-            return self.retained_earnings / self.total_assets
+            return float(self.retained_earnings / self.total_assets)
         except ZeroDivisionError:
-            return 0
+            return 0.0
 
     @property
     def return_of_total_assets(self) -> float:
@@ -89,9 +89,9 @@ class Report(db.Model):
         Calculates the X3 ratio of the Altman Z-score.
         """
         try:
-            return self.ebit / self.total_assets
+            return float(self.ebit / self.total_assets)
         except ZeroDivisionError:
-            return 0
+            return 0.0
 
     @property
     def financial_leverage(self) -> float:
@@ -99,9 +99,9 @@ class Report(db.Model):
         Calculates the X4 ratio of the Altman Z-score.
         """
         try:
-            return self.equity / self.total_liabilities
+            return float(self.equity / self.total_liabilities)
         except ZeroDivisionError:
-            return 0
+            return 0.0
 
     @property
     def asset_turnover(self) -> float:
@@ -109,9 +109,9 @@ class Report(db.Model):
         Calculates the X5 ratio of the Altman Z-score.
         """
         try:
-            return self.sales / self.total_assets
+            return float(self.sales / self.total_assets)
         except ZeroDivisionError:
-            return 0
+            return 0.0
 
     @property
     def score(self) -> float:
