@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+
+  # ---------------------------------------------
+  # Web application Docker container.
+  # ---------------------------------------------
+  web:
+    build: .
+    environment:
+      SECRET_KEY: 'foo-bar'
+      DEBUG: 'true'
+      REDIS_HOSTNAME: '0.0.0.0'
+      REDIS_PORT: '5000'
+      SQLALCHEMY_DATABASE_URI: 'postgres://sit-amet:lorem-ipsum-dolor@0.0.0.0:5432/consectetur'
+    ports:
+      - '5000:5000'
+    volumes:
+      - '.:/app'
+    depends_on:
+      - 'redis'
+      - 'database'
+
+  # ---------------------------------------------
+  # Redis Docker container.
+  # ---------------------------------------------
+  redis:
+    image: 'redis'
+
+  # ---------------------------------------------
+  # PostgreSQL Docker container.
+  # ---------------------------------------------
+  database:
+    image: 'postgres'
+    environment:
+      POSTGRES_PASSWORD: 'lorem-ipsum-dolor'
+      POSTGRES_USER: 'sit-amet'
+      POSTGRES_DB: 'consectetur'

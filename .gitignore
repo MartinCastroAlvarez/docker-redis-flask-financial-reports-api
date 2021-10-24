@@ -1,0 +1,11 @@
+# Virtual environment.
+.env/
+
+# Python.
+*.pyc
+__pycache__/
+
+# Swap.
+*.swp
+*.swo
+*.swm
