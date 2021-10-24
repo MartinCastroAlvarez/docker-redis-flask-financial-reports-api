@@ -7,7 +7,7 @@ import logging
 
 from app.db import db
 
-logger: logging.RootLogger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 
 class Report(db.Model):
@@ -89,7 +89,7 @@ class Report(db.Model):
         Calculates the X3 ratio of the Altman Z-score.
         """
         try:
-            return self.ebit / self.assets
+            return self.ebit / self.total_assets
         except ZeroDivisionError:
             return 0
 
@@ -144,4 +144,4 @@ class Report(db.Model):
         }
 
 
-logger.info("Report model initialized:", Report)
+logger.info("Report model initialized: %s", Report)

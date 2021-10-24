@@ -2,12 +2,12 @@
 
 #### 1. Create a Docker image for the web application.
 ```python3
-docker build -t "altman" .
+docker-compose build --no-cache
 ```
 
 #### 2. Start containers using Docker Compose
 ```python3
-docker-compose up
+docker-compose up --build
 ```
 
 #### 3. Visit the [web server](http://0.0.0.0:5000) is up and running
