@@ -10,5 +10,6 @@ WiserFunding Technical Assignment
 - [CI/CD with Travis or similar](./.github/workflows/main.yaml)
 - [Caching using Redis](./app/controllers/README.md)
 
-TODO:
+### Coming Soon:
+
 - [Test coverage of 100%](./tests/README.md)
