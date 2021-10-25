@@ -48,8 +48,8 @@ def all_reports() -> dict:
         }
 
 
-@blue.route("/<report_id>", methods=["GET", "PUT", "DELETE"])
-def report_by_id(report_id: str) -> dict:
+@blue.route("/<company_id>", methods=["GET", "PUT", "DELETE"])
+def report_by_id(company_id: str) -> dict:
     """
     Returns a previously generated report.
     """
@@ -57,29 +57,29 @@ def report_by_id(report_id: str) -> dict:
         logger.error(
             "Report By ID: %s %s %s",
             request.method,
-            report_id,
+            company_id,
             request.data,
         )
         reports: typing.Generator[Report, None, None]
         if request.method == "DELETE":
-            reports = reports_controllers.delete_reports_by_report_id(
-                report_id=report_id
+            reports = reports_controllers.delete_reports_by_company_id(
+                company_id=company_id
             )
         elif request.method == "PUT":
             payload: dict = json.loads(request.data.decode("utf-8"))
-            reports = reports_controllers.create_reports_by_report_id(
-                report_id=report_id, financials=payload["financials"]
+            reports = reports_controllers.create_reports_by_company_id(
+                company_id=company_id, financials=payload["financials"]
             )
         elif request.method == "GET":
-            reports = reports_controllers.get_reports_by_report_id(
-                report_id=report_id
+            reports = reports_controllers.get_reports_by_company_id(
+                company_id=company_id
             )
         response: dict = {
             "reports": [report.to_json() for report in reports]
         }
         return response
     except Exception as error:  # noqa
-        logger.exception("Error: '%s/<report_id>'", blue)
+        logger.exception("Error: '%s/<company_id>'", blue)
         return {
             "error": str(type(error)),
             "code": getattr(error, "CODE", "unknown"),

@@ -15,7 +15,7 @@ class Report(db.Model):
     Report Model
     """
 
-    report_id: db.Column = db.Column(db.String(50), primary_key=True)
+    company_id: db.Column = db.Column(db.String(50), primary_key=True)
     year: db.Column = db.Column(db.Integer, primary_key=True)
     ebit: db.Column = db.Column(
         db.Float(precision=10, asdecimal=True),
@@ -52,7 +52,7 @@ class Report(db.Model):
         """
         String serializer.
         """
-        return f"<Report: {self.report_id} {self.year}>"
+        return f"<Report: {self.company_id} {self.year}>"
 
     @property
     def working_capital(self) -> float:
@@ -133,7 +133,7 @@ class Report(db.Model):
         JSON serializer.
         """
         return {
-            "id": self.report_id,
+            "id": self.company_id,
             "year": int(self.year),
             "equity": float(self.equity),
             "retained_earnings": float(self.retained_earnings),

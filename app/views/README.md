@@ -66,6 +66,15 @@ curl -L \
 				"sales": 1234.56,
 				"total_assets": 345.67,
 				"total_liabilities": 456.78
+			},
+			{
+				"year": 2010,
+				"ebit": 123.45,
+				"equity": 234.56,
+				"retained_earnings": 345.67,
+				"sales": 1234.56,
+				"total_assets": 345.67,
+				"total_liabilities": 456.78
 			}
 		]
 	}' \

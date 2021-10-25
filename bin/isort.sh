@@ -1,6 +1,5 @@
 #!/bin/bash
 isort \
-	--diff \
 	"app"
 LAST_COMMAND_EXIT_CODE=$?
 if [ ${LAST_COMMAND_EXIT_CODE} != 0 ]

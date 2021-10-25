@@ -4,7 +4,7 @@
 
 #### Attributes
 
-- `report_id`: `String`
+- `company_id`: `String`
 - `year`: `Integer`
 - `equity`: `Decimal`
 - `retained_earnings`: `Decimal`
