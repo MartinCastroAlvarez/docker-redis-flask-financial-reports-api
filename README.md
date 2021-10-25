@@ -9,7 +9,4 @@ WiserFunding Technical Assignment
 - [Use of pre-commit, black, mypy, isort etc.](./bin/README.md)
 - [CI/CD with Travis or similar](./.github/workflows/main.yaml)
 - [Caching using Redis](./app/controllers/README.md)
-
-### Coming Soon:
-
 - [Test coverage of 100%](./tests/README.md)

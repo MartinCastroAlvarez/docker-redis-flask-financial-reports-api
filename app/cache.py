@@ -1,18 +1,14 @@
 """
 Flask application
-https://flask.palletsprojects.com/en/2.0.x/tutorial/factory/
+https://flask-and-redis.readthedocs.io/en/latest/
 """
 
 import logging
-import os
 
-from redis import Redis
+from flask_redis import Redis
 
 logger: logging.Logger = logging.getLogger(__name__)
 
-cache: Redis = Redis(
-    host=os.environ["REDIS_HOSTNAME"],
-    port=int(os.environ["REDIS_PORT"]),
-)
+cache: Redis = Redis()
 
 logger.info("Cache initialized: %s", cache)

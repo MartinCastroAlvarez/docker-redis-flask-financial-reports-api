@@ -10,9 +10,10 @@ services:
     environment:
       SECRET_KEY: 'foo-bar'
       DEBUG: 'true'
-      REDIS_HOSTNAME: '0.0.0.0'
+      REDIS_HOST: 'redis'
       REDIS_PORT: '6379'
-      SQLALCHEMY_DATABASE_URI: 'postgres://sit-amet:lorem-ipsum-dolor@0.0.0.0:5432/consectetur'
+      REDIS_DB: 1
+      SQLALCHEMY_DATABASE_URI: 'postgresql://sit-amet:lorem-ipsum-dolor@database:5432/consectetur'
     ports:
       - '5000:5000'
     volumes:
@@ -26,13 +27,20 @@ services:
   # ---------------------------------------------
   redis:
     image: 'redis'
+    ports:
+      - '6379:6379'
 
   # ---------------------------------------------
   # PostgreSQL Docker container.
   # ---------------------------------------------
   database:
     image: 'postgres'
+    ports:
+      - '5432:5432'
     environment:
       POSTGRES_PASSWORD: 'lorem-ipsum-dolor'
       POSTGRES_USER: 'sit-amet'
       POSTGRES_DB: 'consectetur'
+
+networks:
+  altman:

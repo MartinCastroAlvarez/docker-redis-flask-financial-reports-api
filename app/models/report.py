@@ -57,9 +57,11 @@ class Report(db.Model):
     @property
     def working_capital(self) -> float:
         """
-        The working capital calculation is: WC = Current Assets - Current Liabilities.
+        The working capital calculation is:
+        >>> WC = Current Assets - Current Liabilities.
 
-        NOTE: It is assumed that the company has no Non-Current Assets or Liabilities.
+        NOTE: It is assumed that the company has
+              no Non-Current Assets or Liabilities.
         """
         return self.total_assets - self.total_liabilities
 
@@ -70,6 +72,8 @@ class Report(db.Model):
         """
         try:
             return float(self.working_capital / self.total_assets)
+        except TypeError:
+            return 0.0
         except ZeroDivisionError:
             return 0.0
 
@@ -80,6 +84,8 @@ class Report(db.Model):
         """
         try:
             return float(self.retained_earnings / self.total_assets)
+        except TypeError:
+            return 0.0
         except ZeroDivisionError:
             return 0.0
 
@@ -90,6 +96,8 @@ class Report(db.Model):
         """
         try:
             return float(self.ebit / self.total_assets)
+        except TypeError:
+            return 0.0
         except ZeroDivisionError:
             return 0.0
 
@@ -100,6 +108,8 @@ class Report(db.Model):
         """
         try:
             return float(self.equity / self.total_liabilities)
+        except TypeError:
+            return 0.0
         except ZeroDivisionError:
             return 0.0
 
@@ -110,6 +120,8 @@ class Report(db.Model):
         """
         try:
             return float(self.sales / self.total_assets)
+        except TypeError:
+            return 0.0
         except ZeroDivisionError:
             return 0.0
 

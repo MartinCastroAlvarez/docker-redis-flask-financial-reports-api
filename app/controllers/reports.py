@@ -6,12 +6,13 @@ https://flask-sqlalchemy.palletsprojects.com/en/2.x/quickstart/
 import logging
 import typing
 
+from sqlalchemy import exc
+
 from app.cache import cache
 from app.db import db
 from app.exceptions import AltmanException
 from app.forms.financials import validate_financials
 from app.models.report import Report
-from sqlalchemy import exc
 
 logger: logging.Logger = logging.getLogger(__name__)
 
@@ -39,9 +40,7 @@ def create_reports_by_company_id(
         raise CompanyIdException("Invalid Report ID")
     cache_key: str = f"report-{company_id}"
     if cache.get(cache_key):
-        raise DuplicateException(
-            "The Report has already been created!"
-        )
+        raise DuplicateException("The Report has already been created!")
     validate_financials(financials)
     for financial in financials:
         report: Report = Report()
@@ -57,13 +56,10 @@ def create_reports_by_company_id(
         yield report
     try:
         db.session.commit()
-    except exc.IntegrityError:
-        raise DuplicateException("The Report already exists!")
-    except exc.SQLAlchemyError:
-        db.session.rollback()
-        raise
-    finally:
         cache.set(cache_key, "1")
+    except exc.IntegrityError as error:
+        cache.set(cache_key, "1")
+        raise DuplicateException("The Report already exists!") from error
 
 
 def get_all_reports() -> typing.Generator[Report, None, None]:
@@ -98,11 +94,6 @@ def delete_reports_by_company_id(
     for report in get_reports_by_company_id(company_id):
         db.session.delete(report)
         yield report
-    try:
-        db.session.commit()
-    except exc.SQLAlchemyError:
-        db.session.rollback()
-        raise
 
 
 logger.info("Report controller initialized.")

@@ -16,9 +16,7 @@ from app.models.report import Report
 
 logger: logging.Logger = logging.getLogger(__name__)
 
-blue: Blueprint = Blueprint(
-    "reports", __name__, url_prefix="/company/gb"
-)
+blue: Blueprint = Blueprint("reports", __name__, url_prefix="/company/gb")
 
 
 @blue.route(
@@ -68,15 +66,14 @@ def report_by_id(company_id: str) -> dict:
         elif request.method == "PUT":
             payload: dict = json.loads(request.data.decode("utf-8"))
             reports = reports_controllers.create_reports_by_company_id(
-                company_id=company_id, financials=payload["financials"]
+                company_id=company_id,
+                financials=payload["financials"],
             )
         elif request.method == "GET":
             reports = reports_controllers.get_reports_by_company_id(
                 company_id=company_id
             )
-        response: dict = {
-            "reports": [report.to_json() for report in reports]
-        }
+        response: dict = {"reports": [report.to_json() for report in reports]}
         return response
     except Exception as error:  # noqa
         logger.exception("Error: '%s/<company_id>'", blue)

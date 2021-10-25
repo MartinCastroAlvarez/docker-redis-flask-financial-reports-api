@@ -59,11 +59,13 @@ def validate_financial(financial: dict) -> None:
         raise FinancialsException("Invalid financials total_assets.")
     if (
         "total_liabilities" not in financial
-        or not isinstance(
-            financial["total_liabilities"], (int, float)
-        )
+        or not isinstance(financial["total_liabilities"], (int, float))
         or financial["total_liabilities"] < 0
     ):
-        raise FinancialsException(
-            "Invalid financials total_liabilities."
-        )
+        raise FinancialsException("Invalid financials total_liabilities.")
+    if (
+        "retained_earnings" not in financial
+        or not isinstance(financial["retained_earnings"], (int, float))
+        or financial["retained_earnings"] < 0
+    ):
+        raise FinancialsException("Invalid financials retained_earnings.")
