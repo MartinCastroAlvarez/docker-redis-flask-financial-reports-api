@@ -10,7 +10,7 @@ docker-compose build --no-cache
 docker-compose up --build
 ```
 
-#### 3. Visit the [web server](http://0.0.0.0:5000) is up and running
+#### 3. Visit the [web server](http://0.0.0.0:5000) and check that it is up and running
 
 #### 4. Stop containers using Docker Compose
 ```python3
