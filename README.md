@@ -1,5 +1,4 @@
 # Altman
-WiserFunding Technical Assignment
 
 - [Docker compose up to run locally](./INSTALL.md)
 - [Documentation of the software architecture](./app/README.md)
